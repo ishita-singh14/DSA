@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <ctype.h>
+#define SIZE 100
+int stack[SIZE];
+int top = -1;
+void push(int value)
+{
+stack[++top] = value;
+}
+int pop()
+{
+return stack[top--];
+}
+int evaluatePostfix(char postfix[])
+{
+int i, a, b;
+for (i = 0; postfix[i] != '\0'; i++)
+{
+char c = postfix[i];
+if (isdigit(c))
+{
+
+push(c - '0');
+}
+else
+{
+b = pop();
+a = pop();
+switch (c)
+{
+case '+':
+push(a + b);
+break;
+case '-':
+push(a - b);
+break;
+case '*':
+push(a * b);
+break;
+case '/':
+push(a / b);
+break;
+}
+}
+}
+return pop();
+}
+int main()
+{
+char postfix[SIZE];
+printf("Enter postfix expression: ");
+scanf("%99s", postfix);
+
+printf("Result = %d\n", evaluatePostfix(postfix));
+return 0;
+}
